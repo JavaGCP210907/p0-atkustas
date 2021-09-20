@@ -6,7 +6,7 @@ public class Customer {
 	private int customer_id;
 	private String firstname;
 	private String lastname;
-	private int account_bal;
+	private double account_bal;
 	private int account_num;
 
 
@@ -14,7 +14,7 @@ public class Customer {
 	public Customer() {
 	}
 	
-	public Customer(int customer_id, String firstname, String lastname, int account_bal, int account_num) {
+	public Customer(int customer_id, String firstname, String lastname, double account_bal, int account_num) {
 		super();
 		this.customer_id = customer_id;
 		this.firstname = firstname;
@@ -62,7 +62,7 @@ public class Customer {
 		this.lastname = lastname;
 	}
 
-	public int getAccount_bal() {
+	public double getAccount_bal() {
 		return account_bal;
 	}
 
@@ -77,13 +77,14 @@ public class Customer {
 	public void setAccount_num(int account_num) {
 		this.account_num = account_num;
 	}
-	
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + account_bal;
+		long temp;
+		temp = Double.doubleToLongBits(account_bal);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + account_num;
 		result = prime * result + customer_id;
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
@@ -100,7 +101,7 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (account_bal != other.account_bal)
+		if (Double.doubleToLongBits(account_bal) != Double.doubleToLongBits(other.account_bal))
 			return false;
 		if (account_num != other.account_num)
 			return false;
@@ -118,6 +119,7 @@ public class Customer {
 			return false;
 		return true;
 	}
+	
 
 	
 
