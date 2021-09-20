@@ -26,4 +26,8 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    
+    //JDBC (Java Database Connectivity) dependency --- let's Java communicate with PostgreSQL Database
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
 }
