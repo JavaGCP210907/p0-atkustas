@@ -1,6 +1,7 @@
 package com.revature.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,8 +32,9 @@ public class CustomerDao implements CustomerDaoInterface{
 			while(rs.next()) {
 			Customer c = new Customer(
 					rs.getInt("customer_id"),
-					rs.getString("firstname"),
-					rs.getString("lastname"),
+					rs.getString("firstName"),
+					rs.getString("lastName"),
+					rs.getString("address"),
 					rs.getDouble("account_bal"),
 					rs.getInt("account_num_fk")
 					);
@@ -51,13 +53,35 @@ public class CustomerDao implements CustomerDaoInterface{
 	}
 
 	@Override
-	public void addCustomer() {
-		// TODO Auto-generated method stub
+	public void addCustomer(Customer customer) {
+
+		try(Connection conn = BankConnection.getConnection()){
+			
+			String sql = "insert into bank.customers (firstname, lastname, address, account_bal)" +
+							"values (?,?,?,?)";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, customer.getFirstName());
+			ps.setString(2, customer.getLastName());
+			ps.setString(3, customer.getAddress());
+			ps.setDouble(4, customer.getAccount_bal());
+			
+			ps.executeUpdate();
+			
+			System.out.println("New customer " +customer.getFirstName()+ " entered into system.");
+			System.out.println(customer.getFirstName()+ " initial balance: " +customer.getAccount_bal());
+			
+			
+		} catch(SQLException e) {
+			System.out.println("add employee failed.");
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
-	public void removeCustomer() {
+	public void removeCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		
 	}

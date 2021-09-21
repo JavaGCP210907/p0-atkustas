@@ -4,37 +4,39 @@ public class Customer {
 	
 	//variables
 	private int customer_id;
-	private String firstname;
-	private String lastname;
+	private String firstName;
+	private String lastName;
+	private String address;
 	private double account_bal;
-	private int account_num;
+	private int account_num_fk;
 
 
 	//constructors
 	public Customer() {
 	}
 	
-	public Customer(int customer_id, String firstname, String lastname, double account_bal, int account_num) {
+	public Customer(String firstName, String lastName, String address, double account_bal) {
 		super();
-		this.customer_id = customer_id;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
 		this.account_bal = account_bal;
-		this.account_num = account_num;
 	}
 
-	public Customer(int customer_id, String firstname, String lastname, int account_bal) {
+	public Customer(int customer_id, String firstName, String lastName, String address, double account_bal, int account_num_fk) {
 		super();
 		this.customer_id = customer_id;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
 		this.account_bal = account_bal;
+		this.account_num_fk = account_num_fk;
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [customer_id=" + customer_id + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", account_bal=" + account_bal + ", account_num=" + account_num + "]";
+		return "Customer [customer_id=" + customer_id + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", address=" + address + ", account_bal=" + account_bal + ", account_num=" + account_num_fk + "]";
 	}
 	
 	//getters & setters
@@ -46,36 +48,44 @@ public class Customer {
 		this.customer_id = customer_id;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public double getAccount_bal() {
 		return account_bal;
 	}
 
-	public void setAccount_bal(int account_bal) {
+	public void setAccount_bal(double account_bal) {
 		this.account_bal = account_bal;
 	}
 
 	public int getAccount_num() {
-		return account_num;
+		return account_num_fk;
 	}
 
-	public void setAccount_num(int account_num) {
-		this.account_num = account_num;
+	public void setAccount_num(int account_num_fk) {
+		this.account_num_fk = account_num_fk;
 	}
 
 	@Override
@@ -85,10 +95,11 @@ public class Customer {
 		long temp;
 		temp = Double.doubleToLongBits(account_bal);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + account_num;
+		result = prime * result + account_num_fk;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + customer_id;
-		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
 
@@ -103,23 +114,27 @@ public class Customer {
 		Customer other = (Customer) obj;
 		if (Double.doubleToLongBits(account_bal) != Double.doubleToLongBits(other.account_bal))
 			return false;
-		if (account_num != other.account_num)
+		if (account_num_fk != other.account_num_fk)
+			return false;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
 			return false;
 		if (customer_id != other.customer_id)
 			return false;
-		if (firstname == null) {
-			if (other.firstname != null)
+		if (firstName == null) {
+			if (other.firstName != null)
 				return false;
-		} else if (!firstname.equals(other.firstname))
+		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (lastname == null) {
-			if (other.lastname != null)
+		if (lastName == null) {
+			if (other.lastName != null)
 				return false;
-		} else if (!lastname.equals(other.lastname))
+		} else if (!lastName.equals(other.lastName))
 			return false;
 		return true;
 	}
-	
 
 	
 

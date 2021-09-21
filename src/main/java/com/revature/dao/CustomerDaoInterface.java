@@ -10,9 +10,9 @@ public interface CustomerDaoInterface {
 	public List<Customer> getCustomers();
 	
 	//INSERT
-	public void addCustomer();
+	public void addCustomer(Customer customer);
 	
 	//DELETE
-	public void removeCustomer();
+	public void removeCustomer(Customer customer);
 
 }

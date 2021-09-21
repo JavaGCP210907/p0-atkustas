@@ -23,6 +23,7 @@ public class Menu {
 			System.out.println("-----------------------------------");
 			
 			System.out.println("customers -->> show all customers");
+			System.out.println("newcustomer -->> add a new customer");
 			System.out.println("exit -->> leave app");
 			
 			//
@@ -34,6 +35,25 @@ public class Menu {
 				for(Customer cust : customers) {
 					System.out.println(cust);
 				}
+				break;
+			
+			case "newcustomer":
+				
+				System.out.println("Enter Customer First Name");
+				String firstName = sc.nextLine();
+				
+				System.out.println("Enter Customer Last Name");
+				String lastName = sc.nextLine();
+				
+				System.out.println("Enter street address");
+				String address = sc.nextLine();
+				
+				System.out.println("Enter starting account balance");
+				double account_bal = sc.nextDouble();
+				
+				Customer cust = new Customer(firstName, lastName, address, account_bal);
+				
+				cDao.addCustomer(cust);
 				break;
 				
 			case "exit":{
