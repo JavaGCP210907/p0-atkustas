@@ -13,6 +13,6 @@ public interface CustomerDaoInterface {
 	public void addCustomer(Customer customer);
 	
 	//DELETE
-	public void removeCustomer(Customer customer);
+	public void removeCustomer(int id);
 
 }

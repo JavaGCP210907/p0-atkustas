@@ -81,8 +81,23 @@ public class CustomerDao implements CustomerDaoInterface{
 	}
 
 	@Override
-	public void removeCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+	public void removeCustomer(int id) {
+		
+		try(Connection conn = BankConnection.getConnection()){
+			
+			String sql = "delete from bank.customers where customer_id = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			
+			System.out.println("Customer " +id+ " removed.");
+			
+		} catch(SQLException e) {
+			System.out.println("remove employee failed.");
+			e.printStackTrace();
+		}
 		
 	}
 

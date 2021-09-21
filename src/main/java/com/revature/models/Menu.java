@@ -24,6 +24,7 @@ public class Menu {
 			
 			System.out.println("customers -->> show all customers");
 			System.out.println("newcustomer -->> add a new customer");
+			System.out.println("removecustomer -->> remove customer by id");
 			System.out.println("exit -->> leave app");
 			
 			//
@@ -35,6 +36,8 @@ public class Menu {
 				for(Customer cust : customers) {
 					System.out.println(cust);
 				}
+				
+				//add log
 				break;
 			
 			case "newcustomer":
@@ -54,7 +57,24 @@ public class Menu {
 				Customer cust = new Customer(firstName, lastName, address, account_bal);
 				
 				cDao.addCustomer(cust);
+				sc.nextLine();
+				
+				//add log
+				
 				break;
+			
+			case "removecustomer":{
+				
+				System.out.println("Enter id of the customer to remove account.");
+				
+				int id = sc.nextInt();
+				cDao.removeCustomer(id);
+				sc.nextLine();
+				
+				//add log
+				
+				break;
+			}
 				
 			case "exit":{
 				printMenu = false;
