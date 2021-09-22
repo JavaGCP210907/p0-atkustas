@@ -4,31 +4,27 @@ public class Transaction {
 	
 	//variables
 	private int account_num;
-	private int last_deposit;
-	private String last_dep_date;
-	private int last_withdrawal;
-	private String last_withdrawal_date;
+	private String tran_type;
+	private double tran_amt;
+	private String tran_date;
 
 	//constructors
 	public Transaction() {
 		super();
 	}
 
-	public Transaction(int account_num, int last_deposit, String last_dep_date, int last_withdrawal,
-			String last_withdrawal_date) {
+	public Transaction(int account_num, String tran_type, double tran_amt, String tran_date) {
 		super();
 		this.account_num = account_num;
-		this.last_deposit = last_deposit;
-		this.last_dep_date = last_dep_date;
-		this.last_withdrawal = last_withdrawal;
-		this.last_withdrawal_date = last_withdrawal_date;
+		this.tran_type = tran_type;
+		this.tran_amt = tran_amt;
+		this.tran_date = tran_date;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Transaction [account_num=" + account_num + ", last_deposit=" + last_deposit + ", last_dep_date="
-				+ last_dep_date + ", last_withdrawal=" + last_withdrawal + ", last_withdrawal_date="
-				+ last_withdrawal_date + "]";
+		return "Transaction [account_num=" + account_num + ", tran_type=" + tran_type + ", tran_amt=" + tran_amt
+				+ ", tran_date=" + tran_date + "]";
 	}
 
 	public int getAccount_num() {
@@ -39,47 +35,41 @@ public class Transaction {
 		this.account_num = account_num;
 	}
 
-	public int getLast_deposit() {
-		return last_deposit;
+	public String getTran_type() {
+		return tran_type;
 	}
 
-	public void setLast_deposit(int last_deposit) {
-		this.last_deposit = last_deposit;
+	public void setTran_type(String tran_type) {
+		this.tran_type = tran_type;
 	}
 
-	public String getLast_dep_date() {
-		return last_dep_date;
+	public double getTran_amt() {
+		return tran_amt;
 	}
 
-	public void setLast_dep_date(String last_dep_date) {
-		this.last_dep_date = last_dep_date;
+	public void setTran_amt(double tran_amt) {
+		this.tran_amt = tran_amt;
 	}
 
-	public int getLast_withdrawal() {
-		return last_withdrawal;
+	public String getTran_date() {
+		return tran_date;
 	}
 
-	public void setLast_withdrawal(int last_withdrawal) {
-		this.last_withdrawal = last_withdrawal;
+	public void setTran_date(String tran_date) {
+		this.tran_date = tran_date;
 	}
 
-	public String getLast_withdrawal_date() {
-		return last_withdrawal_date;
-	}
-
-	public void setLast_withdrawal_date(String last_withdrawal_date) {
-		this.last_withdrawal_date = last_withdrawal_date;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + account_num;
-		result = prime * result + ((last_dep_date == null) ? 0 : last_dep_date.hashCode());
-		result = prime * result + last_deposit;
-		result = prime * result + last_withdrawal;
-		result = prime * result + ((last_withdrawal_date == null) ? 0 : last_withdrawal_date.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(tran_amt);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((tran_date == null) ? 0 : tran_date.hashCode());
+		result = prime * result + ((tran_type == null) ? 0 : tran_type.hashCode());
 		return result;
 	}
 
@@ -94,23 +84,20 @@ public class Transaction {
 		Transaction other = (Transaction) obj;
 		if (account_num != other.account_num)
 			return false;
-		if (last_dep_date == null) {
-			if (other.last_dep_date != null)
+		if (Double.doubleToLongBits(tran_amt) != Double.doubleToLongBits(other.tran_amt))
+			return false;
+		if (tran_date == null) {
+			if (other.tran_date != null)
 				return false;
-		} else if (!last_dep_date.equals(other.last_dep_date))
+		} else if (!tran_date.equals(other.tran_date))
 			return false;
-		if (last_deposit != other.last_deposit)
-			return false;
-		if (last_withdrawal != other.last_withdrawal)
-			return false;
-		if (last_withdrawal_date == null) {
-			if (other.last_withdrawal_date != null)
+		if (tran_type == null) {
+			if (other.tran_type != null)
 				return false;
-		} else if (!last_withdrawal_date.equals(other.last_withdrawal_date))
+		} else if (!tran_type.equals(other.tran_type))
 			return false;
 		return true;
 	}
-	
 	
 	
 }

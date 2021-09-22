@@ -37,7 +37,7 @@ public class CustomerDao implements CustomerDaoInterface{
 					rs.getString("lastName"),
 					rs.getString("address"),
 					rs.getDouble("account_bal"),
-					rs.getInt("account_num_fk")
+					rs.getInt("account_num")
 					);
 			
 			customerList.add(c);
@@ -77,7 +77,7 @@ public class CustomerDao implements CustomerDaoInterface{
 						rs.getString("lastName"),
 						rs.getString("address"),
 						rs.getDouble("account_bal"),
-						rs.getInt("account_num_fk")
+						rs.getInt("account_num")
 						);
 				
 				customerList.add(c);

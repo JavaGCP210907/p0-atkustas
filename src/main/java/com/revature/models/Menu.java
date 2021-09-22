@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.revature.dao.CustomerDao;
+import com.revature.dao.TransactionsDao;
 
 public class Menu {
 	
 	CustomerDao cDao = new CustomerDao();
+	TransactionsDao tDao = new TransactionsDao();
 	
 	public void printMenu() {
 		
@@ -23,7 +25,9 @@ public class Menu {
 			System.out.println("-----------------------------------");
 			
 			System.out.println("customers -->> show all customers");
+			System.out.println("recenttrans -->> show latest transactions");
 			System.out.println("customerbyid -->> show customer by id");
+			System.out.println("makedepositbyid -->> make a deposit");
 			System.out.println("newcustomer -->> add a new customer");
 			System.out.println("removecustomer -->> remove customer by id");
 			System.out.println("exit -->> leave app");
@@ -38,8 +42,17 @@ public class Menu {
 					System.out.println(cust);
 				}
 				
-				//add log
+				
 				break;
+			
+			case "recenttrans": {
+				List<Transaction> transactions = tDao.getTrans();
+				for(Transaction tran : transactions) {
+					System.out.println(tran);
+				}
+				
+			}
+			break;
 			
 			case "customerbyid":
 				System.out.println("Which customer id would you like a record for?");
@@ -54,10 +67,10 @@ public class Menu {
 				
 			case "newcustomer":
 				
-				System.out.println("Enter Customer First Name");
+				System.out.println("Enter customer first name");
 				String firstName = sc.nextLine();
 				
-				System.out.println("Enter Customer Last Name");
+				System.out.println("Enter customer last name");
 				String lastName = sc.nextLine();
 				
 				System.out.println("Enter street address");
@@ -68,7 +81,10 @@ public class Menu {
 				
 				Customer cust = new Customer(firstName, lastName, address, account_bal);
 				
+				tDao.addNewAccount(account_bal);
 				cDao.addCustomer(cust);
+
+				
 				sc.nextLine();
 				
 				//add log

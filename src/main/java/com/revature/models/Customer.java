@@ -8,7 +8,7 @@ public class Customer {
 	private String lastName;
 	private String address;
 	private double account_bal;
-	private int account_num_fk;
+	private int account_num;
 
 
 	//constructors
@@ -23,20 +23,20 @@ public class Customer {
 		this.account_bal = account_bal;
 	}
 
-	public Customer(int customer_id, String firstName, String lastName, String address, double account_bal, int account_num_fk) {
+	public Customer(int customer_id, String firstName, String lastName, String address, double account_bal, int account_num) {
 		super();
 		this.customer_id = customer_id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.account_bal = account_bal;
-		this.account_num_fk = account_num_fk;
+		this.account_num = account_num;
 	}
 
 	@Override
 	public String toString() {
 		return "Customer [customer_id=" + customer_id + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", address=" + address + ", account_bal=" + account_bal + ", account_num=" + account_num_fk + "]";
+				+ ", address=" + address + ", account_bal=" + account_bal + ", account_num=" + account_num + "]";
 	}
 	
 	//getters & setters
@@ -81,11 +81,11 @@ public class Customer {
 	}
 
 	public int getAccount_num() {
-		return account_num_fk;
+		return account_num;
 	}
 
 	public void setAccount_num(int account_num_fk) {
-		this.account_num_fk = account_num_fk;
+		this.account_num = account_num_fk;
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class Customer {
 		long temp;
 		temp = Double.doubleToLongBits(account_bal);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + account_num_fk;
+		result = prime * result + account_num;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + customer_id;
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
@@ -114,7 +114,7 @@ public class Customer {
 		Customer other = (Customer) obj;
 		if (Double.doubleToLongBits(account_bal) != Double.doubleToLongBits(other.account_bal))
 			return false;
-		if (account_num_fk != other.account_num_fk)
+		if (account_num != other.account_num)
 			return false;
 		if (address == null) {
 			if (other.address != null)
