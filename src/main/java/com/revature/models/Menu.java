@@ -23,6 +23,7 @@ public class Menu {
 			System.out.println("-----------------------------------");
 			
 			System.out.println("customers -->> show all customers");
+			System.out.println("customerbyid -->> show customer by id");
 			System.out.println("newcustomer -->> add a new customer");
 			System.out.println("removecustomer -->> remove customer by id");
 			System.out.println("exit -->> leave app");
@@ -40,6 +41,17 @@ public class Menu {
 				//add log
 				break;
 			
+			case "customerbyid":
+				System.out.println("Which customer id would you like a record for?");
+				int input = sc.nextInt();
+				sc.nextLine();
+				
+				List <Customer> customer = cDao.getCustomerById(input);
+				for(Customer cust : customer) {
+					System.out.println(cust);
+				}
+				break;
+				
 			case "newcustomer":
 				
 				System.out.println("Enter Customer First Name");

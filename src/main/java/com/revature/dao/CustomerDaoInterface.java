@@ -9,6 +9,9 @@ public interface CustomerDaoInterface {
 	//SELECT *
 	public List<Customer> getCustomers();
 	
+	//SELECT WHERE
+	public List<Customer> getCustomerById(int id);
+	
 	//INSERT
 	public void addCustomer(Customer customer);
 	

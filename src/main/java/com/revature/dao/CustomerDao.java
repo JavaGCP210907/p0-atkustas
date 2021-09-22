@@ -21,6 +21,7 @@ public class CustomerDao implements CustomerDaoInterface{
 			
 			ResultSet rs = null;
 			
+			//SELECT
 			String sql = "select * from bank.customers";
 			
 			Statement s = conn.createStatement();
@@ -51,12 +52,57 @@ public class CustomerDao implements CustomerDaoInterface{
 		
 		return null;
 	}
+	
+	@Override
+	public List<Customer> getCustomerById(int id) {
+		
+		try(Connection conn = BankConnection.getConnection()){
+			
+			ResultSet rs = null;
+			
+			//SELECT -> WHERE
+			String sql = "select * from bank.customers where customer_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, id);
+			
+			rs = ps.executeQuery();
+			
+			List<Customer> customerList = new ArrayList<>();
+			
+			while(rs.next()) {
+				Customer c = new Customer(
+						rs.getInt("customer_id"),
+						rs.getString("firstName"),
+						rs.getString("lastName"),
+						rs.getString("address"),
+						rs.getDouble("account_bal"),
+						rs.getInt("account_num_fk")
+						);
+				
+				customerList.add(c);
+				
+			}
+			
+			return customerList;
+			
+			
+		} catch(SQLException e) {
+			System.out.println("Something went wrong fetching customer from database.");
+			e.printStackTrace();
+		}
+		
+		
+		
+		return null;
+	}
 
 	@Override
 	public void addCustomer(Customer customer) {
 
 		try(Connection conn = BankConnection.getConnection()){
 			
+			//INSERT
 			String sql = "insert into bank.customers (firstname, lastname, address, account_bal)" +
 							"values (?,?,?,?)";
 			
@@ -85,6 +131,7 @@ public class CustomerDao implements CustomerDaoInterface{
 		
 		try(Connection conn = BankConnection.getConnection()){
 			
+			//DELETE
 			String sql = "delete from bank.customers where customer_id = ?";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -100,5 +147,6 @@ public class CustomerDao implements CustomerDaoInterface{
 		}
 		
 	}
+
 
 }
