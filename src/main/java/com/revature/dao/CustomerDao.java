@@ -86,13 +86,11 @@ public class CustomerDao implements CustomerDaoInterface{
 			
 			return customerList;
 			
-			
 		} catch(SQLException e) {
 			System.out.println("Something went wrong fetching customer from database.");
+			System.out.println("Check the customer id number and try again.");
 			e.printStackTrace();
-		}
-		
-		
+		}		
 		
 		return null;
 	}
@@ -148,5 +146,50 @@ public class CustomerDao implements CustomerDaoInterface{
 		
 	}
 
+	@Override
+	public void updateDeposit(double amt, int id) {
 
+		try(Connection conn = BankConnection.getConnection()){
+			
+			//UPDATE
+			String sql = "update bank.customers set account_bal = account_bal + ? where account_num = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setDouble(1, amt);
+			ps.setInt(2, id);
+			
+			ps.executeUpdate();
+			
+		} catch(SQLException e) {
+			System.out.println("account balance update failed.");
+			e.printStackTrace();
+		
+		}
+
+	}
+
+	@Override
+	public void updateWithdrawal(double amt, int id) {
+		
+	try(Connection conn = BankConnection.getConnection()){
+			
+			//UPDATE
+			String sql = "update bank.customers set account_bal = account_bal - ? where account_num = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setDouble(1, amt);
+			ps.setInt(2, id);
+			
+			ps.executeUpdate();
+			
+		} catch(SQLException e) {
+			System.out.println("account balance update failed.");
+			e.printStackTrace();
+		
+		}
+		
+	}
+	
 }

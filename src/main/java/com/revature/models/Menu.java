@@ -3,6 +3,9 @@ package com.revature.models;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.dao.CustomerDao;
 import com.revature.dao.TransactionsDao;
 
@@ -10,6 +13,7 @@ public class Menu {
 	
 	CustomerDao cDao = new CustomerDao();
 	TransactionsDao tDao = new TransactionsDao();
+	Logger log = LogManager.getLogger(Menu.class);
 	
 	public void printMenu() {
 		
@@ -27,7 +31,8 @@ public class Menu {
 			System.out.println("customers -->> show all customers");
 			System.out.println("recenttrans -->> show latest transactions");
 			System.out.println("customerbyid -->> show customer by id");
-			System.out.println("makedepositbyid -->> make a deposit");
+			System.out.println("deposit -->> make a deposit");
+			System.out.println("withdrawal -->> make a withdrawal");
 			System.out.println("newcustomer -->> add a new customer");
 			System.out.println("removecustomer -->> remove customer by id");
 			System.out.println("exit -->> leave app");
@@ -36,14 +41,17 @@ public class Menu {
 			String command = sc.nextLine();
 			
 			switch(command) {
-			case "customers":
+			case "customers":{
 				List<Customer> customers = cDao.getCustomers();
 				for(Customer cust : customers) {
 					System.out.println(cust);
 				}
 				
+				log.info("User fetched customer info.");
 				
 				break;
+			
+			}
 			
 			case "recenttrans": {
 				List<Transaction> transactions = tDao.getTrans();
@@ -51,8 +59,10 @@ public class Menu {
 					System.out.println(tran);
 				}
 				
+				log.info("User viewed most recent transactions.");
+				
+				break;
 			}
-			break;
 			
 			case "customerbyid":
 				System.out.println("Which customer id would you like a record for?");
@@ -63,9 +73,44 @@ public class Menu {
 				for(Customer cust : customer) {
 					System.out.println(cust);
 				}
+				
+				log.info("User pulled individual customer info.");
+				
 				break;
 				
-			case "newcustomer":
+			case "deposit":{
+				System.out.println("Please enter the account number.");
+				int id = sc.nextInt();
+				System.out.println("Enter the deposit amount.");
+				double amt = sc.nextDouble();
+				
+				cDao.updateDeposit(amt, id);
+				tDao.makeDepositByAccount(amt, id);
+				
+				sc.nextLine();
+				
+				log.info("User made deposit in account " +id);
+				
+				break;
+			}
+			
+			case "withdrawal":{
+				System.out.println("Please enter the account number.");
+				int id = sc.nextInt();
+				System.out.println("Enter amount to withdraw.");
+				double amt = sc.nextDouble();
+				
+				cDao.updateWithdrawal(amt, id);
+				tDao.makeWithdrawalByAccount(amt, id);
+				
+				sc.nextLine();
+				
+				log.info("User made withdrawal in account " +id);				
+				
+				break;
+			}
+				
+			case "newcustomer":{
 				
 				System.out.println("Enter customer first name");
 				String firstName = sc.nextLine();
@@ -76,7 +121,7 @@ public class Menu {
 				System.out.println("Enter street address");
 				String address = sc.nextLine();
 				
-				System.out.println("Enter starting account balance");
+				System.out.println("Enter initial deposit amount.");
 				double account_bal = sc.nextDouble();
 				
 				Customer cust = new Customer(firstName, lastName, address, account_bal);
@@ -87,9 +132,12 @@ public class Menu {
 				
 				sc.nextLine();
 				
-				//add log
+				log.info("User added a new customer to the database.");
 				
 				break;
+			}
+			
+		
 			
 			case "removecustomer":{
 				
@@ -97,9 +145,10 @@ public class Menu {
 				
 				int id = sc.nextInt();
 				cDao.removeCustomer(id);
+				tDao.deleteAccount(id);
 				sc.nextLine();
 				
-				//add log
+				log.info("User deleted a customer from the database.");
 				
 				break;
 			}

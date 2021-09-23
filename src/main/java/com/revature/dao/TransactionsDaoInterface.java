@@ -6,12 +6,19 @@ import com.revature.models.Transaction;
 
 public interface TransactionsDaoInterface {
 	
+	//SELECT *
 	public List<Transaction> getTrans();
 	
-	public void makeDepositByAccount(int id, int deposit);
+	//UPDATE
+	public void makeDepositByAccount(double amt, int id);
 	
-	public void makeWithdrawalByAccount(int id, int withdrawal);
+	//UPDATE
+	public void makeWithdrawalByAccount(double amt, int id);
 	
+	//INSERT
 	public void addNewAccount(double amt);
+		
+	//DELETE
+	public void deleteAccount(int id);
 
 }

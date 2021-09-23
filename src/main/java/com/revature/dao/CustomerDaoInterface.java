@@ -17,5 +17,11 @@ public interface CustomerDaoInterface {
 	
 	//DELETE
 	public void removeCustomer(int id);
+	
+	//UPDATE
+	public void updateDeposit(double amt, int id);
+	
+	//UPDATE
+	public void updateWithdrawal(double amt, int id);
 
 }

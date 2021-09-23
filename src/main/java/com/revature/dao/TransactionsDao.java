@@ -65,12 +65,31 @@ try(Connection conn = BankConnection.getConnection()){
 	}
 
 	@Override
-	public void makeDepositByAccount(int id, int deposit) {
+	public void makeDepositByAccount(double amt, int id) {
 		
 		try(Connection conn = BankConnection.getConnection()){
 			
-			String sql = "update bank.transactions set tran_type = Deposit set tran_amt = ?"
-					+ "set tran_date = ? where account_num = ?";
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			Date date = new Date();
+			
+			String currentDate = dateFormat.format(date);
+			
+			String type = "Deposit";
+			
+			String sql = "update bank.transactions set tran_type = ?, tran_amt = ?,"
+					+ " tran_date = ? where account_num = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, type);
+			ps.setDouble(2, amt);
+			ps.setDate(3, java.sql.Date.valueOf(currentDate));
+			ps.setInt(4, id);
+			
+			ps.executeUpdate();
+			
+			System.out.println("Deposit of " +amt+ " added to account # " + id +".");
 			
 		} catch (SQLException e) {
 			System.out.println("Something went wrong, funds not deposited.");
@@ -80,8 +99,34 @@ try(Connection conn = BankConnection.getConnection()){
 	}
 
 	@Override
-	public void makeWithdrawalByAccount(int id, int withdrawal) {
-		// TODO Auto-generated method stub
+	public void makeWithdrawalByAccount(double amt, int id) {
+		
+		try(Connection conn = BankConnection.getConnection()){
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			Date date = new Date();
+			
+			String currentDate = dateFormat.format(date);
+			
+			String type = "Withdrawal";
+			
+			String sql = "update bank.transactions set tran_type = ?, tran_amt = ?,"
+					+ " tran_date = ? where account_num = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, type);
+			ps.setDouble(2, amt);
+			ps.setDate(3, java.sql.Date.valueOf(currentDate));
+			ps.setInt(4, id);
+			
+			System.out.println("Withdrawal of " +amt+ " taken from account # " + id +".");
+			
+		} catch (SQLException e) {
+			System.out.println("Something went wrong, funds not withdrawn.");
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -116,6 +161,27 @@ try(Connection conn = BankConnection.getConnection()){
 			e.printStackTrace();
 		}
 		
+		
+	}
+
+	@Override
+	public void deleteAccount(int id) {
+		
+		try(Connection conn = BankConnection.getConnection()){
+			
+			//DELETE
+			String sql = "delete from bank.transactions where account_num = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, id);
+			
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Account removal failed.");
+			e.printStackTrace();
+		}
 		
 	}
 
